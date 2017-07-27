@@ -23,7 +23,7 @@ class Absorber(Facade):
 
     There is also a whole mechanism of maintaining absorber:
 
-    * name of PLCs for inserting and extracting absorber
+    * name of PLCs for inserting and extracting absorberx
     * name of PLCs for changing state of absorber (inserted or extracted)
     * attribute for holding value of absorber state (inserted or extracted)
     * methods to Insert or Extract the absorber itself
@@ -41,58 +41,57 @@ class Absorber(Facade):
 
     # proxy attributes
 
-    PlcAttrName_AchromatFSW = proxy_attribute(
-        dtype=str,
+    waterFlowAlarm_Achromat = proxy_attribute(
+        dtype=bool,
         access=AttrWriteType.READ_WRITE,
-        property_name="PlcAttrName_AchromatFSWAttribute",
+        property_name="PlcAttrName_AchromatFSW",
         description="PLC device and attribute name for alarm from water flow "
                     "in the achromat")
 
     PlcAttrName_Extract = proxy_attribute(
-        dtype=str,
+        dtype=bool,
         access=AttrWriteType.READ_WRITE,
         property_name="PlcAttrName_ExtractAttribute",
         description="PLC device and attribute name for extracting absorber")
 
     PlcAttrName_Insert = proxy_attribute(
-        dtype=str,
+        dtype=bool,
         access=AttrWriteType.READ_WRITE,
         property_name="PlcAttrName_InsertAttribute",
         description="PLC device and attribute name for inserting absorber")
 
-    PlcAttrName_FSW_1 = proxy_attribute(
-        dtype=str,
+    waterFlowAlarm_1 = proxy_attribute(
+        dtype=bool,
         access=AttrWriteType.READ_WRITE,
-        property_name="PlcAttrName_FSW_1Attribute",
+        property_name="PlcAttrName_FSW_1",
         description="PLC device and attribute name for flow alarm")
 
-    PlcAttrName_FSW_2 = proxy_attribute(
-        dtype=str,
+    waterFlowAlarm_2 = proxy_attribute(
+        dtype=bool,
         access=AttrWriteType.READ_WRITE,
-        property_name="PlcAttrName_FSW_2Attribute",
+        property_name="PlcAttrName_FSW_2",
         description="PLC device and attribute name for flow alarm")
 
-    PlcAttrName_FSW_3 = proxy_attribute(
-        dtype=str,
+    waterFlowAlarm_3 = proxy_attribute(
+        dtype=bool,
         access=AttrWriteType.READ_WRITE,
-        property_name="PlcAttrName_FSW_3Attribute",
+        property_name="PlcAttrName_FSW_3",
         description="PLC device and attribute name for flow alarm")
 
     PlcAttrName_StateExtracted = proxy_attribute(
-        dtype=str,
+        dtype=bool,
         access=AttrWriteType.READ_WRITE,
         property_name="PlcAttrName_StateExtractedAttribute",
         description="PLC device and attribute name for extracted state")
 
     PlcAttrName_StateInserted = proxy_attribute(
-        dtype=str,
+        dtype=bool,
         access=AttrWriteType.READ_WRITE,
         property_name="PlcAttrName_StateInsertedAttribute",
         description="PLC device and attribute name for inserted state")
 
     # logical attributes
 
-    # not sure if this is correct
     @logical_attribute(
         dtype=bool,
         bind=['PlcAttrName_StateExtracted', 'PlcAttrName_StateInserted'],
@@ -101,34 +100,6 @@ class Absorber(Facade):
                     "PlcAttrName_StateInserted")
     def InExStatus(self, ins, exs):
         return ins and not exs
-
-    @logical_attribute(
-        dtype=bool,
-        bind=['PlcAttrName_FSW_1'],
-        description="value of PlcAttrName_FSW_1")
-    def waterFlowAlarm_1(self, val):
-        return val
-
-    @logical_attribute(
-        dtype=bool,
-        bind=['PlcAttrName_FSW_1'],
-        description="value of PlcAttrName_FSW_2")
-    def waterFlowAlarm_2(self, val):
-        return val
-
-    @logical_attribute(
-        dtype=bool,
-        bind=['PlcAttrName_FSW_3'],
-        description="value of PlcAttrName_FSW_3")
-    def waterFlowAlarm_3(self, val):
-        return val
-
-    @logical_attribute(
-        dtype=bool,
-        bind=['PlcAttrName_AchromatFSW'],
-        description="value of PlcAttrName_AchromatFSW")
-    def waterFlowAlarm_Achromat(self, val):
-        return val
 
     # proxy commands
 
@@ -177,7 +148,7 @@ class Absorber(Facade):
         """
         write False to PlcAttrName_Extract, then write True to PlcAttrName_Insert
         """
-        self._einsert_in()
+        self._insert_in()
         return True
 
 
