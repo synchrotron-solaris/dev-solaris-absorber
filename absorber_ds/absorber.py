@@ -183,8 +183,7 @@ class Absorber(Facade):
 
 # run server
 
-# run = Absorber.run_server()
+run = Absorber.run_server()
 
 if __name__ == '__main__':
-    # run()
-    Absorber.run_server()
+    run()
