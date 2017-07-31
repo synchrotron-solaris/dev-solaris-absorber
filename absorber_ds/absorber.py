@@ -44,98 +44,98 @@ class Absorber(Facade):
     waterFlowAlarm_Achromat = proxy_attribute(
         dtype=bool,
         access=AttrWriteType.READ,
-        property_name="PlcAttrName_AchromatFSW",
+        property_name="PLCAttrName_AchromatFSW",
         description="PLC device and attribute name for alarm from water flow "
                     "in the achromat")
 
-    PlcAttrName_Extract = proxy_attribute(
+    PLCAttrName_Extract = proxy_attribute(
         dtype=bool,
         access=AttrWriteType.READ_WRITE,
-        property_name="PlcAttrName_ExtractAttribute",
+        property_name="PLCAttrName_ExtractAttribute",
         description="PLC device and attribute name for extracting absorber")
 
-    PlcAttrName_Insert = proxy_attribute(
+    PLCAttrName_Insert = proxy_attribute(
         dtype=bool,
         access=AttrWriteType.READ_WRITE,
-        property_name="PlcAttrName_InsertAttribute",
+        property_name="PLCAttrName_InsertAttribute",
         description="PLC device and attribute name for inserting absorber")
 
     waterFlowAlarm_1 = proxy_attribute(
         dtype=bool,
         access=AttrWriteType.READ,
-        property_name="PlcAttrName_FSW_1",
+        property_name="PLCAttrName_FSW_1",
         description="PLC device and attribute name for flow alarm")
 
     waterFlowAlarm_2 = proxy_attribute(
         dtype=bool,
         access=AttrWriteType.READ,
-        property_name="PlcAttrName_FSW_2",
+        property_name="PLCAttrName_FSW_2",
         description="PLC device and attribute name for flow alarm")
 
     waterFlowAlarm_3 = proxy_attribute(
         dtype=bool,
         access=AttrWriteType.READ,
-        property_name="PlcAttrName_FSW_3",
+        property_name="PLCAttrName_FSW_3",
         description="PLC device and attribute name for flow alarm")
 
-    PlcAttrName_StateExtracted = proxy_attribute(
+    PLCAttrName_StateExtracted = proxy_attribute(
         dtype=bool,
         access=AttrWriteType.READ,
-        property_name="PlcAttrName_StateExtractedAttribute",
+        property_name="PLCAttrName_StateExtractedAttribute",
         description="PLC device and attribute name for extracted state")
 
-    PlcAttrName_StateInserted = proxy_attribute(
+    PLCAttrName_StateInserted = proxy_attribute(
         dtype=bool,
         access=AttrWriteType.READ,
-        property_name="PlcAttrName_StateInsertedAttribute",
+        property_name="PLCAttrName_StateInsertedAttribute",
         description="PLC device and attribute name for inserted state")
 
     # logical attributes
 
     @logical_attribute(
         dtype=bool,
-        bind=['PlcAttrName_StateExtracted', 'PlcAttrName_StateInserted'],
+        bind=['PLCAttrName_StateExtracted', 'PLCAttrName_StateInserted'],
         description="True: the absorber is inserted. False: the absorber "
-                    "is extracted. Based on PlcAttrName_StateExtracted and "
-                    "PlcAttrName_StateInserted")
+                    "is extracted. Based on PLCAttrName_StateExtracted and "
+                    "PLCAttrName_StateInserted")
     def InExStatus(self, ins, exs):
         return ins and not exs
 
     # commands
 
-    @command
+    @command()
     def Extract(self):
         """
-        :return: False to PlcAttrName_Insert, then True to PlcAttrName_Extract
+        :return: False to PLCAttrName_Insert, then True to PLCAttrName_Extract
         :rtype: bool
         """
         # write False to PlcAttrName_Insert
-        in_node = self.graph['PlcAttrName_Insert']
+        in_node = self.graph['PLCAttrName_Insert']
         value, stamp, quality = in_node.result()
         value = False
         new_result = triplet(value)
         in_node.set_result(new_result)
         # write True to PlcAttrName_Extract
-        ex_node = self.graph['PlcAttrName_Extract']
+        ex_node = self.graph['PLCAttrName_Extract']
         value, stamp, quality = ex_node.result()
         value = True
         new_result = triplet(value)
         ex_node.set_result(new_result)
 
-    @command
+    @command()
     def Insert(self):
         """
-        :return: False to PlcAttrName_Extract, then True to PlcAttrName_Insert
+        :return: False to PLCAttrName_Extract, then True to PLCAttrName_Insert
         :rtype: bool
         """
         # write False to PlcAttrName_Extract
-        ex_node = self.graph['PlcAttrName_Extract']
+        ex_node = self.graph['PLCAttrName_Extract']
         value, stamp, quality = ex_node.result()
         value = False
         new_result = triplet(value)
         ex_node.set_result(new_result)
         # write True to PlcAttrName_Insert
-        in_node = self.graph['PlcAttrName_Insert']
+        in_node = self.graph['PLCAttrName_Insert']
         value, stamp, quality = in_node.result()
         value = True
         new_result = triplet(value)
@@ -147,4 +147,3 @@ run = Absorber.run_server()
 
 if __name__ == '__main__':
     run()
-    
