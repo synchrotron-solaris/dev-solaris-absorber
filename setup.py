@@ -4,7 +4,7 @@ from absorber_ds.version import __version__, licence
 from absorber_ds import __doc__, __author__, __author_email__
 
 setup(
-    name='absorber',
+    name='tangods-absorber',
     author=__author__,
     author_email=__author_email__,
     version=__version__,
